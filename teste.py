@@ -45,6 +45,7 @@ class background:
 
     def draw(self, screen):
         pass
+        x = 0
 
 class game:
 
