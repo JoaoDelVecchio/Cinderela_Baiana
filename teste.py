@@ -53,6 +53,5 @@ class game:
 
     def loop(self):
         pass
-        pygame.
 
 Game = game()
