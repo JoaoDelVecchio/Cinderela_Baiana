@@ -49,7 +49,8 @@ class enemy:
             self.x = self.x - self.speed
         elif 1540 < self.aux * self.speed <= 1680:
             self.x = self.x - self.speed
-
+        elif 1680 < self.aux * self.speed <= 1820:
+            self.y = self.y + self.speed
 
 
 class tower:
