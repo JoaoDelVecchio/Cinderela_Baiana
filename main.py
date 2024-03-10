@@ -1,8 +1,8 @@
-import pandas
 import pygame
 from background import background
 from tower import tower
 from enemy import enemy
+from red_ballon import red_ballon
 
 class game:
     width = 800
@@ -19,19 +19,13 @@ class game:
     def handle_events(self):
         pass
 
-    def spawn_enemy(self, type):
-        instance = enemy(type)
-
     def loop(self):
         i = 0
 
-        t1 = 1
-        t2 = 2
+
         enemy_instances = []
-        instance1 = enemy(t1)
-        instance2 = enemy(t2)
+        instance1 = red_ballon()
         enemy_instances.append(instance1)
-        enemy_instances.append(instance2)
 
         tower_instances = []
         instance1 = tower(1)
@@ -41,7 +35,6 @@ class game:
             self.map.draw(self.screen)
 
             for ins in enemy_instances:
-                ins.update()
                 ins.movement(self.screen)
 
             for ins in tower_instances:

@@ -1,33 +1,15 @@
-import pygame
-
 class enemy:
-    health = None
-    image = None
-    speed = None
     x = 0
     y = 190
     aux = 0
+    health = None
+    image = None
+    speed = None
 
-    def __init__(self, type):
-        if type == 1:
-            image = pygame.image.load("images/enemy.png")
-            image.convert()
-            image = pygame.transform.scale(image, (50, 50))
-            self.image = image
-            self.health = 1
-            self.speed = 1
-        if type == 2:
-            image = pygame.image.load("images/enemy2.png")
-            image.convert()
-            image = pygame.transform.scale(image, (50, 50))
-            self.image = image
-            self.health = 5
-            self.speed = 0.5
+    def __init__(self):
+        print('oi')
 
     def movement(self, screen):
-        screen.blit(self.image, (self.x, self.y))
-
-    def update(self):
         self.aux = self.aux + 1
         if self.aux * self.speed <= 225:
             self.x = self.x + self.speed
@@ -56,3 +38,4 @@ class enemy:
         elif 1690 < self.aux * self.speed <= 1820:
             self.y = self.y + self.speed
 
+        screen.blit(self.image, (self.x, self.y))
