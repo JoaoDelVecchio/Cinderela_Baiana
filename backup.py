@@ -93,6 +93,18 @@ class background:
     def draw(self, screen):
         screen.blit(self.image, (0, 0))
 
+class teste:
+    vida = None
+
+    def __init__(self, vida):
+        self.vida = 10
+        print('teste')
+
+    def mover(self):
+        print('oi')
+
+t = teste()
+
 class game:
     width = 800
     height = 800
