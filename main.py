@@ -4,7 +4,6 @@ from background import background
 from tower import tower
 from enemy import enemy
 
-
 class game:
     width = 800
     height = 800

@@ -11,5 +11,3 @@ class background:
 
     def draw(self, screen):
         screen.blit(self.image, (0, 0))
-
-print('Hello')
