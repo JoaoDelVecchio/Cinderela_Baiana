@@ -74,11 +74,12 @@ class tower:
         if type == 2:
             pass
 
-    def draw(self):
-        pass
-
     def enemy_in_range(self):
         pass
+
+    def draw(self, screen):
+        screen.blit(self.image, (200, 230))
+
 
 class background:
     image = None
@@ -115,18 +116,26 @@ class game:
 
         t1 = 1
         t2 = 2
-        instance = []
+        enemy_instances = []
         instance1 = enemy(t1)
         instance2 = enemy(t2)
-        instance.append(instance1)
-        instance.append(instance2)
+        enemy_instances.append(instance1)
+        enemy_instances.append(instance2)
+
+        tower_instances = []
+        instance1 = tower(1)
+        tower_instances.append(instance1)
 
         while i <= 100000:
             self.map.draw(self.screen)
 
-            for ins in instance:
+            for ins in enemy_instances:
                 ins.update()
                 ins.movement(self.screen)
+
+            for ins in tower_instances:
+                ins.enemy_in_range()
+                ins.draw(self.screen)
 
             i = i + 1
             pygame.display.update()
