@@ -16,9 +16,14 @@ class enemy:
             image = pygame.transform.scale(image, (50, 50))
             self.image = image
             self.health = 1
-            self.speed = 3
+            self.speed = 1
         if type == 2:
-            pass
+            image = pygame.image.load("images/enemy2.png")
+            image.convert()
+            image = pygame.transform.scale(image, (50, 50))
+            self.image = image
+            self.health = 5
+            self.speed = 0.5
 
     def movement(self, screen):
         screen.blit(self.image, (self.x, self.y))
@@ -47,9 +52,9 @@ class enemy:
             self.y = self.y + self.speed
         elif 1540 < self.aux * self.speed <= 1680:
             self.x = self.x - self.speed
-        elif 1540 < self.aux * self.speed <= 1680:
+        elif 1540 < self.aux * self.speed <= 1690:
             self.x = self.x - self.speed
-        elif 1680 < self.aux * self.speed <= 1820:
+        elif 1690 < self.aux * self.speed <= 1820:
             self.y = self.y + self.speed
 
 
@@ -107,16 +112,22 @@ class game:
 
     def loop(self):
         i = 0
-        t = 1
-        instance = enemy(t)
+
+        t1 = 1
+        t2 = 2
+        instance = []
+        instance1 = enemy(t1)
+        instance2 = enemy(t2)
+        instance.append(instance1)
+        instance.append(instance2)
+
         while i <= 100000:
             self.map.draw(self.screen)
-            instance.update()
-            instance.movement(self.screen)
-            #print(instance.x)
-            #print(instance.y)
-            #print("--------")
-            #print(i)
+
+            for ins in instance:
+                ins.update()
+                ins.movement(self.screen)
+
             i = i + 1
             pygame.display.update()
 
