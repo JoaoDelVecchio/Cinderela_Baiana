@@ -7,7 +7,7 @@ class enemy:
     speed = None
 
     def __init__(self):
-        print('oi')
+        pass
 
     def movement(self, screen):
         self.aux = self.aux + 1

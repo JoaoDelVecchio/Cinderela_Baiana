@@ -3,6 +3,7 @@ from background import background
 from tower import tower
 from enemy import enemy
 from red_ballon import red_ballon
+from blue_ballon import blue_ballon
 
 class game:
     width = 800
@@ -20,12 +21,14 @@ class game:
         pass
 
     def loop(self):
-        i = 0
 
+        i = 0
 
         enemy_instances = []
         instance1 = red_ballon()
+        instance2 = blue_ballon()
         enemy_instances.append(instance1)
+        enemy_instances.append(instance2)
 
         tower_instances = []
         instance1 = tower(1)
