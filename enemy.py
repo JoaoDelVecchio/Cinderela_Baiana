@@ -1,3 +1,4 @@
+
 class enemy:
     x = 0
     y = 190
@@ -39,3 +40,6 @@ class enemy:
             self.y = self.y + self.speed
 
         screen.blit(self.image, (self.x, self.y))
+
+    def take_damage(self):
+        pass

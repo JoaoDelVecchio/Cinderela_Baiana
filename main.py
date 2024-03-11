@@ -1,9 +1,8 @@
 import pygame
 from background import background
-from tower import tower
-from enemy import enemy
 from red_ballon import red_ballon
 from blue_ballon import blue_ballon
+from dart_monkey import dart_monkey
 
 class game:
     width = 800
@@ -31,7 +30,7 @@ class game:
         enemy_instances.append(instance2)
 
         tower_instances = []
-        instance1 = tower(1)
+        instance1 = dart_monkey()
         tower_instances.append(instance1)
 
         while i <= 100000:

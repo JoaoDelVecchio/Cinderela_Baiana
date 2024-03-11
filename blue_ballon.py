@@ -10,4 +10,4 @@ class blue_ballon(enemy):
         image = pygame.transform.scale(image, (50, 50))
         self.image = image
         self.health = 2
-        self.speed = 2
+        self.speed = 1.5
