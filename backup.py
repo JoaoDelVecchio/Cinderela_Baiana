@@ -1,3 +1,74 @@
+"""
+import pygame
+from background import background
+from tower import tower
+from enemy import enemy
+from red_ballon import red_ballon
+
+class game:
+    width = 800
+    height = 800
+    screen = None
+    map = None
+
+    def __init__(self):
+        pygame.init()
+        self.screen = pygame.display.set_mode((self.width, self.height))
+        self.map = background()
+        self.map.draw(self.screen)
+
+    def handle_events(self):
+        pass
+
+    def spawn_enemy(self, type):
+        instance = enemy(type)
+
+    def loop(self):
+        i = 0
+
+        enemy_instances = []
+        instance1 = red_ballon()
+        enemy_instances.append(instance1)
+
+        tower_instances = []
+        instance1 = tower(1)
+        tower_instances.append(instance1)
+
+        while i <= 100000:
+            self.map.draw(self.screen)
+
+            for ins in enemy_instances:
+                ins.movement(self.screen)
+
+            for ins in tower_instances:
+                ins.enemy_in_range()
+                ins.draw(self.screen)
+
+            i = i + 1
+            pygame.display.update()
+
+
+
+Game = game()
+Game.loop()
+"""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# versão antes de criar subclasses:
+"""
 import pandas
 import pygame
 
@@ -74,11 +145,12 @@ class tower:
         if type == 2:
             pass
 
-    def draw(self):
-        pass
-
     def enemy_in_range(self):
         pass
+
+    def draw(self, screen):
+        screen.blit(self.image, (200, 230))
+
 
 class background:
     image = None
@@ -91,6 +163,18 @@ class background:
 
     def draw(self, screen):
         screen.blit(self.image, (0, 0))
+
+class teste:
+    vida = None
+
+    def __init__(self, vida):
+        self.vida = 10
+        print('teste')
+
+    def mover(self):
+        print('oi')
+
+t = teste()
 
 class game:
     width = 800
@@ -115,18 +199,26 @@ class game:
 
         t1 = 1
         t2 = 2
-        instance = []
+        enemy_instances = []
         instance1 = enemy(t1)
         instance2 = enemy(t2)
-        instance.append(instance1)
-        instance.append(instance2)
+        enemy_instances.append(instance1)
+        enemy_instances.append(instance2)
+
+        tower_instances = []
+        instance1 = tower(1)
+        tower_instances.append(instance1)
 
         while i <= 100000:
             self.map.draw(self.screen)
 
-            for ins in instance:
+            for ins in enemy_instances:
                 ins.update()
                 ins.movement(self.screen)
+
+            for ins in tower_instances:
+                ins.enemy_in_range()
+                ins.draw(self.screen)
 
             i = i + 1
             pygame.display.update()
@@ -135,4 +227,4 @@ class game:
 
 Game = game()
 Game.loop()
-
+"""
