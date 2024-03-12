@@ -8,7 +8,7 @@ class tower:
         pass
 
     def enemy_in_range(self):
-        #return True
+        # return True
         pass
 
     def attack(self):

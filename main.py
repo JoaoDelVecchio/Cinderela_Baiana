@@ -1,8 +1,9 @@
 import pygame
 from background import background
-from red_ballon import red_ballon
-from blue_ballon import blue_ballon
+from red_balloon import red_balloon
+from blue_balloon import blue_balloon
 from dart_monkey import dart_monkey
+
 
 class game:
     width = 800
@@ -24,8 +25,8 @@ class game:
         i = 0
 
         enemy_instances = []
-        instance1 = red_ballon()
-        instance2 = blue_ballon()
+        instance1 = red_balloon()
+        instance2 = blue_balloon()
         enemy_instances.append(instance1)
         enemy_instances.append(instance2)
 
@@ -47,7 +48,5 @@ class game:
             pygame.display.update()
 
 
-
 Game = game()
 Game.loop()
-

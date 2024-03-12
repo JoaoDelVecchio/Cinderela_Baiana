@@ -1,3 +1,4 @@
+"""
 import pygame
 from background import background
 from tower import tower
@@ -50,6 +51,21 @@ class game:
 
 Game = game()
 Game.loop()
+"""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # versão antes de criar subclasses:
 """
