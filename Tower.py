@@ -1,5 +1,5 @@
 
-class tower:
+class Tower:
     damage = None
     attack_speed = None
     image = None

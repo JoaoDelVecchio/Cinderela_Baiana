@@ -1,7 +1,7 @@
 import pygame
 
 
-class background:
+class Background:
     image = None
 
     def __init__(self):

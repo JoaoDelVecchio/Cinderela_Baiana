@@ -1,7 +1,7 @@
 import pygame
-from enemy import enemy
+from Enemy import Enemy
 
-class red_balloon(enemy):
+class RedBalloon(Enemy):
 
     def __init__(self):
         super().__init__()

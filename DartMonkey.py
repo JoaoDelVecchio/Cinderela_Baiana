@@ -1,7 +1,7 @@
 import pygame
-from tower import tower
+from Tower import Tower
 
-class dart_monkey(tower):
+class DartMonkey(Tower):
 
     def __init__(self):
         image = pygame.image.load("images/tower.png")

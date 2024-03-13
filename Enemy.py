@@ -1,5 +1,5 @@
 
-class enemy:
+class Enemy:
     x = 0
     y = 190
     aux = 0

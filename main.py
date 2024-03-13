@@ -1,11 +1,11 @@
 import pygame
-from background import background
-from red_balloon import red_balloon
-from blue_balloon import blue_balloon
-from dart_monkey import dart_monkey
+from Background import Background
+from RedBalloon import RedBalloon
+from BlueBalloon import BlueBalloon
+from DartMonkey import DartMonkey
 
 
-class game:
+class Game:
     width = 800
     height = 800
     screen = None
@@ -16,7 +16,7 @@ class game:
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode((self.width, self.height))
-        self.map = background()
+        self.map = Background()
         self.map.draw(self.screen)
 
     def health_money_icons(self, screen):
@@ -35,13 +35,13 @@ class game:
         i = 0
 
         enemy_instances = []
-        instance1 = red_balloon()
-        instance2 = blue_balloon()
+        instance1 = RedBalloon()
+        instance2 = BlueBalloon()
         enemy_instances.append(instance1)
         enemy_instances.append(instance2)
 
         tower_instances = []
-        instance1 = dart_monkey()
+        instance1 = DartMonkey()
         tower_instances.append(instance1)
 
         while i <= 100000:
@@ -63,5 +63,5 @@ class game:
             pygame.display.update()
 
 
-Game = game()
-Game.loop()
+game = Game()
+game.loop()
