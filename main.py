@@ -4,14 +4,14 @@ from red_balloon import red_balloon
 from blue_balloon import blue_balloon
 from dart_monkey import dart_monkey
 
-money = 0
-health = 100
 
 class game:
     width = 800
     height = 800
     screen = None
     map = None
+    money = 0
+    health = 100
 
     def __init__(self):
         pygame.init()
@@ -22,8 +22,8 @@ class game:
     def health_money_icons(self, screen):
         font = pygame.font.SysFont(None, 30)
 
-        health_icon = font.render("health:" + str(health), True, (250, 0, 0))
-        money_icon = font.render("money:" + str(money), True, (250, 0, 0))
+        health_icon = font.render("health:" + str(self.health), True, (250, 0, 0))
+        money_icon = font.render("money:" + str(self.money), True, (250, 0, 0))
         screen.blit(health_icon, (50, 25))
         screen.blit(money_icon, (200, 25))
 
@@ -49,6 +49,9 @@ class game:
 
             for ins in enemy_instances:
                 ins.movement(self.screen)
+                if ins.detect_projectile():
+                    ins.take_damage()
+                    self.money = self.money + 1
 
             for ins in tower_instances:
                 ins.enemy_in_range()

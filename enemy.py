@@ -42,4 +42,7 @@ class enemy:
         screen.blit(self.image, (self.x, self.y))
 
     def take_damage(self):
-        pass
+        self.health = self.health - 1
+
+    def detect_projectile(self):
+        return True
