@@ -36,7 +36,7 @@ class Enemy:
             self.x = self.x - self.speed
         elif 1540 < self.aux * self.speed <= 1690:
             self.x = self.x - self.speed
-        elif 1690 < self.aux * self.speed <= 1820:
+        elif 1690 < self.aux * self.speed <= 1815:
             self.y = self.y + self.speed
 
         screen.blit(self.image, (self.x, self.y))

@@ -3,6 +3,7 @@ from Background import Background
 from RedBalloon import RedBalloon
 from BlueBalloon import BlueBalloon
 from DartMonkey import DartMonkey
+from SuperMonkey import SuperMonkey
 
 
 class Game:
@@ -12,6 +13,11 @@ class Game:
     map = None
     money = 0
     health = 100
+    enemy_instances = []
+    tower_instances = []
+
+    hold_image = 0
+    tower_icon = None
 
     def __init__(self):
         pygame.init()
@@ -28,32 +34,60 @@ class Game:
         screen.blit(money_icon, (200, 25))
 
     def handle_events(self):
-        pass
+
+        if self.hold_image != 0:
+            pos = pygame.mouse.get_pos()
+            self.screen.blit(self.tower_icon, pos)
+
+        for event in pygame.event.get():
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if self.hold_image == 1:
+                    self.tower_instances.append(SuperMonkey())
+                if self.hold_image == 2:
+                    self.tower_instances.append(DartMonkey())
+                self.hold_image = 0
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_1:
+                    self.hold_image = 1
+                    self.tower_icon = pygame.image.load("images/tower.png")
+                    self.tower_icon.convert()
+                    self.tower_icon = pygame.transform.scale(self.tower_icon, (75, 75))
+                if event.key == pygame.K_2:
+                    self.hold_image = 2
+                    self.tower_icon = pygame.image.load("images/tower2.png")
+                    self.tower_icon.convert()
+                    self.tower_icon = pygame.transform.scale(self.tower_icon, (75, 75))
+
 
     def loop(self):
 
         i = 0
 
-        enemy_instances = []
-        instance1 = RedBalloon()
-        instance2 = BlueBalloon()
-        enemy_instances.append(instance1)
-        enemy_instances.append(instance2)
-
-        tower_instances = []
         instance1 = DartMonkey()
-        tower_instances.append(instance1)
+        self.tower_instances.append(instance1)
 
         while i <= 100000:
             self.map.draw(self.screen)
 
-            for ins in enemy_instances:
+            self.handle_events()
+
+            if i % 200 == 0:
+                instance = RedBalloon()
+                self.enemy_instances.append(instance)
+
+            if i % 400 == 0:
+                instance = BlueBalloon()
+                self.enemy_instances.append(instance)
+
+            for ins in self.enemy_instances:
                 ins.movement(self.screen)
                 if ins.detect_projectile():
                     ins.take_damage()
                     self.money = self.money + 1
 
-            for ins in tower_instances:
+            for ins in self.tower_instances:
                 ins.enemy_in_range()
                 ins.draw(self.screen)
 
