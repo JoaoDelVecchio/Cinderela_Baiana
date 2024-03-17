@@ -96,6 +96,7 @@ class Game:
             i = i + 1
             pygame.display.update()
 
+teste = 0
 
 game = Game()
 game.loop()
