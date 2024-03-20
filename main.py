@@ -37,15 +37,22 @@ class Game:
 
         if self.hold_image != 0:
             pos = pygame.mouse.get_pos()
+            pos = (pos[0] - 33, pos[1] - 33)
             self.screen.blit(self.tower_icon, pos)
 
         for event in pygame.event.get():
 
             if event.type == pygame.MOUSEBUTTONDOWN:
+                pos = pygame.mouse.get_pos()
+                pos = (pos[0] - 15, pos[1] - 15)
                 if self.hold_image == 1:
-                    self.tower_instances.append(SuperMonkey())
+                    super_monkey = SuperMonkey()
+                    super_monkey.pos = pos
+                    self.tower_instances.append(super_monkey)
                 if self.hold_image == 2:
-                    self.tower_instances.append(DartMonkey())
+                    dart_monkey = DartMonkey()
+                    dart_monkey.pos = pos
+                    self.tower_instances.append(dart_monkey)
                 self.hold_image = 0
 
             if event.type == pygame.KEYDOWN:
@@ -60,13 +67,9 @@ class Game:
                     self.tower_icon.convert()
                     self.tower_icon = pygame.transform.scale(self.tower_icon, (75, 75))
 
-
     def loop(self):
 
         i = 0
-
-        instance1 = DartMonkey()
-        self.tower_instances.append(instance1)
 
         while i <= 100000:
             self.map.draw(self.screen)
@@ -88,7 +91,7 @@ class Game:
                     self.money = self.money + 1
 
             for ins in self.tower_instances:
-                ins.enemy_in_range()
+                ins.enemy_in_range(self.enemy_instances)
                 ins.draw(self.screen)
 
             self.health_money_icons(self.screen)

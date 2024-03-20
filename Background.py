@@ -31,9 +31,8 @@ class Background:
         self.tower_icon2 = tower_icon2
 
         font = pygame.font.SysFont(None, 20)
-        self.money_icon1 = font.render("cost: 400", True, (250, 0, 0))
-        self.money_icon2 = font.render("cost: 200", True, (250, 0, 0))
-
+        self.money_icon1 = font.render("cost: 200", True, (250, 0, 0))
+        self.money_icon2 = font.render("cost: 400", True, (250, 0, 0))
 
     def draw(self, screen):
         screen.blit(self.image, (0, 0))
