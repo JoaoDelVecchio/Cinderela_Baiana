@@ -46,13 +46,13 @@ class Game:
                 pos = pygame.mouse.get_pos()
                 pos = (pos[0] - 15, pos[1] - 15)
                 if self.hold_image == 1:
-                    super_monkey = SuperMonkey()
-                    super_monkey.pos = pos
-                    self.tower_instances.append(super_monkey)
-                if self.hold_image == 2:
                     dart_monkey = DartMonkey()
                     dart_monkey.pos = pos
                     self.tower_instances.append(dart_monkey)
+                if self.hold_image == 2:
+                    super_monkey = SuperMonkey()
+                    super_monkey.pos = pos
+                    self.tower_instances.append(super_monkey)
                 self.hold_image = 0
 
             if event.type == pygame.KEYDOWN:
@@ -76,30 +76,29 @@ class Game:
 
             self.handle_events()
 
-            if i % 200 == 0:
+            if i % 100 == 0:
                 instance = RedBalloon()
                 self.enemy_instances.append(instance)
 
-            if i % 400 == 0:
+            if i % 200 == 0:
                 instance = BlueBalloon()
                 self.enemy_instances.append(instance)
 
-            for ins in self.enemy_instances:
-                ins.movement(self.screen)
-                if ins.detect_projectile():
-                    ins.take_damage()
+            for enemy in self.enemy_instances:
+                enemy.movement(self.screen)
+                if enemy.detect_projectile():
+                    enemy.take_damage()
                     self.money = self.money + 1
 
-            for ins in self.tower_instances:
-                ins.enemy_in_range(self.enemy_instances)
-                ins.draw(self.screen)
+            for tower in self.tower_instances:
+                tower.attack(self.enemy_instances)
+                tower.draw(self.screen)
 
             self.health_money_icons(self.screen)
 
             i = i + 1
             pygame.display.update()
 
-teste = 0
 
 game = Game()
 game.loop()

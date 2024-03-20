@@ -10,4 +10,4 @@ class BlueBalloon(Enemy):
         image = pygame.transform.scale(image, (40, 40))
         self.image = image
         self.health = 2
-        self.speed = 1.5
+        self.speed = 1
