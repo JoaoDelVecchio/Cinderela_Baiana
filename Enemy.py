@@ -6,7 +6,7 @@ class Enemy:
     health = None
     image = None
     speed = None
-    track_length = None
+    track_length = 0
 
     def __init__(self):
         pass
@@ -46,5 +46,15 @@ class Enemy:
     def take_damage(self):
         self.health = self.health - 1
 
-    def detect_projectile(self):
-        return True
+    def detect_projectile(self, x, y):
+        if abs(self.x - x) < 18 and abs(self.y - y) < 18:
+            self.take_damage()
+            return True
+
+    def pop(self):
+        if self.health == 0:
+            return True
+
+    def end_of_track(self):
+        if self.track_length >= 1820:
+            return True

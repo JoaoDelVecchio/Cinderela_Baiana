@@ -85,10 +85,18 @@ class Game:
                 self.enemy_instances.append(instance)
 
             for enemy in self.enemy_instances:
+                for tower in self.tower_instances:
+                    for projectile in tower.projectiles:
+                        if enemy.detect_projectile(projectile.x, projectile.y):
+                            enemy.take_damage()
+                            self.money = self.money + 1
+                            tower.projectiles.remove(projectile)
+                if enemy.end_of_track():
+                    self.enemy_instances.remove(enemy)
+                    self.health = self.health - enemy.health
+                elif enemy.health <= 0:
+                    self.enemy_instances.remove(enemy)
                 enemy.movement(self.screen)
-                if enemy.detect_projectile():
-                    enemy.take_damage()
-                    self.money = self.money + 1
 
             for tower in self.tower_instances:
                 tower.attack(self.enemy_instances)
