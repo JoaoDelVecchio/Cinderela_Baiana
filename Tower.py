@@ -16,18 +16,11 @@ class Tower:
         pass
 
     def enemy_in_range(self, enemy_instances):
-        # min_distance = math.inf
         track_length = 0
         x = 0
         y = 0
         for enemy in enemy_instances:
             distance = sqrt((enemy.x - self.pos[0])**2 + (enemy.y - self.pos[1])**2)
-            """
-            if distance <= self.range:
-                if distance < min_distance:
-                    x = enemy.x
-                    y = enemy.y
-            """
             if distance <= self.range:
                 if enemy.track_length >= track_length:
                     track_length = enemy.track_length

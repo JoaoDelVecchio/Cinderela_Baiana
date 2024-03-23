@@ -10,5 +10,5 @@ class DartMonkey(Tower):
         image = pygame.transform.scale(image, (40, 40))
         self.image = image
         self.damage = 1
-        self.attack_speed = 1
-        self.range = 75
+        self.attack_speed = 1.5
+        self.range = 100

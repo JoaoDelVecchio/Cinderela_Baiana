@@ -2,8 +2,11 @@ import pygame
 from Background import Background
 from RedBalloon import RedBalloon
 from BlueBalloon import BlueBalloon
+from GreenBalloon import GreenBalloon
 from DartMonkey import DartMonkey
 from SuperMonkey import SuperMonkey
+import Rounds
+from math import floor
 
 
 class Game:
@@ -11,11 +14,15 @@ class Game:
     height = 800
     screen = None
     map = None
-    money = 200
+    money = 100
     health = 100
     enemy_instances = []
     tower_instances = []
+    round = 0
+    round_balloons = []
 
+    # auxiliares
+    RBE = 0
     hold_image = 0
     tower_icon = None
 
@@ -30,8 +37,10 @@ class Game:
 
         health_icon = font.render("health:" + str(self.health), True, (250, 0, 0))
         money_icon = font.render("money:" + str(self.money), True, (250, 0, 0))
-        screen.blit(health_icon, (50, 25))
-        screen.blit(money_icon, (200, 25))
+        round_icon = font.render("round:" + str(self.round), True, (250, 0, 0))
+        screen.blit(health_icon, (20, 25))
+        screen.blit(money_icon, (140, 25))
+        screen.blit(round_icon, (260, 25))
 
     def handle_events(self):
 
@@ -50,13 +59,12 @@ class Game:
                     dart_monkey = DartMonkey()
                     dart_monkey.pos = pos
                     self.tower_instances.append(dart_monkey)
-                    self.hold_image = 0
                 if self.hold_image == 2 and self.money >= 400:
                     self.money = self.money - 400
                     super_monkey = SuperMonkey()
                     super_monkey.pos = pos
                     self.tower_instances.append(super_monkey)
-                    self.hold_image = 0
+                self.hold_image = 0
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_1:
@@ -72,19 +80,30 @@ class Game:
 
     def loop(self):
 
-        i = 0
-
-        while i <= 100000:
+        while True:
             self.map.draw(self.screen)
 
             self.handle_events()
+            #print(self.RBE)
 
-            if i % 100 == 0:
+            if self.RBE <= 0:
+                i = 0
+                self.round = self.round + 1
+                self.round_balloons = Rounds.rounds(self.round)
+                self.RBE = self.round_balloons[0] + 2 * self.round_balloons[1] + 3 * self.round_balloons[2]
+                self.money = self.money + 100
+
+            if i % 50 == 0 and self.round_balloons[0] > 0:
+                self.round_balloons[0] = self.round_balloons[0] - 1
                 instance = RedBalloon()
                 self.enemy_instances.append(instance)
-
-            if i % 200 == 0:
+            if i % floor(1000 / (self.round_balloons[1] + 1)) == 0 and self.round_balloons[1] > 0:
+                self.round_balloons[1] = self.round_balloons[1] - 1
                 instance = BlueBalloon()
+                self.enemy_instances.append(instance)
+            if i % floor(1000 / (self.round_balloons[2] + 1)) == 0 and self.round_balloons[2] > 0:
+                self.round_balloons[2] = self.round_balloons[2] - 1
+                instance = GreenBalloon()
                 self.enemy_instances.append(instance)
 
             for enemy in self.enemy_instances:
@@ -92,11 +111,13 @@ class Game:
                     for projectile in tower.projectiles:
                         if enemy.detect_projectile(projectile.x, projectile.y):
                             enemy.take_damage()
+                            self.RBE = self.RBE - 1
                             self.money = self.money + 1
                             tower.projectiles.remove(projectile)
                 if enemy.end_of_track():
                     self.enemy_instances.remove(enemy)
                     self.health = self.health - enemy.health
+                    self.RBE = self.RBE - enemy.health
                 elif enemy.health <= 0:
                     self.enemy_instances.remove(enemy)
                 enemy.movement(self.screen)

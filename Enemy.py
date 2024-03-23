@@ -1,6 +1,6 @@
 
 class Enemy:
-    x = 0
+    x = -10
     y = 190
     aux = 0
     health = None
@@ -30,9 +30,9 @@ class Enemy:
             self.x = self.x + self.speed
         elif 1145 < self.track_length <= 1280:
             self.y = self.y - self.speed
-        elif 1280 < self.track_length <= 1340:
+        elif 1280 < self.track_length <= 1355:
             self.x = self.x + self.speed
-        elif 1340 < self.track_length <= 1540:
+        elif 1355 < self.track_length <= 1540:
             self.y = self.y + self.speed
         elif 1540 < self.track_length <= 1680:
             self.x = self.x - self.speed
