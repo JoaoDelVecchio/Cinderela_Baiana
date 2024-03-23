@@ -11,7 +11,7 @@ class Game:
     height = 800
     screen = None
     map = None
-    money = 0
+    money = 200
     health = 100
     enemy_instances = []
     tower_instances = []
@@ -45,15 +45,18 @@ class Game:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 pos = (pos[0] - 15, pos[1] - 15)
-                if self.hold_image == 1:
+                if self.hold_image == 1 and self.money >= 200:
+                    self.money = self.money - 200
                     dart_monkey = DartMonkey()
                     dart_monkey.pos = pos
                     self.tower_instances.append(dart_monkey)
-                if self.hold_image == 2:
+                    self.hold_image = 0
+                if self.hold_image == 2 and self.money >= 400:
+                    self.money = self.money - 400
                     super_monkey = SuperMonkey()
                     super_monkey.pos = pos
                     self.tower_instances.append(super_monkey)
-                self.hold_image = 0
+                    self.hold_image = 0
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_1:

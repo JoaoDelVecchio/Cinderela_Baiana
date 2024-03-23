@@ -43,12 +43,8 @@ class Enemy:
 
         screen.blit(self.image, (self.x, self.y))
 
-    def take_damage(self):
-        self.health = self.health - 1
-
     def detect_projectile(self, x, y):
-        if abs(self.x - x) < 18 and abs(self.y - y) < 18:
-            self.take_damage()
+        if abs(self.x - x) < 21 and abs(self.y - y) < 21:
             return True
 
     def pop(self):
