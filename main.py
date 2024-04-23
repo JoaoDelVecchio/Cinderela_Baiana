@@ -20,6 +20,7 @@ class Game:
     tower_instances = []
     round = 0
     round_balloons = []
+    run = True
 
     # auxiliares
     RBE = 0
@@ -79,9 +80,11 @@ class Game:
                     self.tower_icon.convert()
                     self.tower_icon = pygame.transform.scale(self.tower_icon, (75, 75))
 
-    def loop(self):
+            if event.type == pygame.QUIT:
+                self.run = False
 
-        while True:
+    def loop(self):
+        while self.run:
             self.map.draw(self.screen)
 
             self.handle_events()
