@@ -10,8 +10,8 @@ from math import floor
 
 
 class Game:
-    width = 800
-    height = 800
+    width = 1200
+    height = 768
     screen = None
     map = None
     money = 100
@@ -33,14 +33,15 @@ class Game:
         self.map.draw(self.screen)
 
     def health_money_icons(self, screen):
-        font = pygame.font.SysFont(None, 30)
+        font = pygame.font.SysFont('Calibri', 40)
 
-        health_icon = font.render("health:" + str(self.health), True, (250, 0, 0))
-        money_icon = font.render("money:" + str(self.money), True, (250, 0, 0))
-        round_icon = font.render("round:" + str(self.round), True, (250, 0, 0))
-        screen.blit(health_icon, (20, 25))
-        screen.blit(money_icon, (140, 25))
-        screen.blit(round_icon, (260, 25))
+        health_icon = font.render("Health:" + str(self.health), True, (0,0,0))
+        money_icon = font.render("Money:" + str(self.money), True, (0,0,0))
+        round_icon = font.render("Round:" + str(self.round), True, (0,0,0))
+        screen.blit(health_icon, (180, 720))
+        screen.blit(money_icon, (440, 720))
+        screen.blit(round_icon, (700, 720))
+
 
     def handle_events(self):
 
@@ -121,6 +122,7 @@ class Game:
                 elif enemy.health <= 0:
                     self.enemy_instances.remove(enemy)
                 enemy.movement(self.screen)
+                
 
             for tower in self.tower_instances:
                 tower.attack(self.enemy_instances)
