@@ -10,7 +10,7 @@ class Projectile:
     x_speed = None
     y_speed = None
     image = None
-    velocity_constant = 2.0
+    velocity_constant = 8
 
     def __init__(self, enemy_x, enemy_y, tower_x, tower_y):
         image = pygame.image.load("images/projectile.png")

@@ -6,7 +6,7 @@ class RedBalloon(Enemy):
 
     def __init__(self):
         super(RedBalloon, self).__init__()
-        image = pygame.image.load("images/enemy.png")
+        image = pygame.image.load("images/bomb_pix.png")
         image.convert()
         image = pygame.transform.scale(image, (80, 80))
         self.image = image

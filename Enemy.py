@@ -33,5 +33,5 @@ class Enemy:
             return True
 
     def end_of_track(self):
-        if self.track_length >= 1450:
+        if self.track_length >= 1300:
             return True

@@ -33,7 +33,7 @@ class Game:
         self.map.draw(self.screen)
 
     def health_money_icons(self, screen):
-        font = pygame.font.SysFont('Calibri', 40)
+        font = pygame.font.SysFont('Calibri', 40, True)
 
         health_icon = font.render("Health:" + str(self.health), True, (0,0,0))
         money_icon = font.render("Money:" + str(self.money), True, (0,0,0))
