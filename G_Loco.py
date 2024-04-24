@@ -11,7 +11,7 @@ class G(Enemy):
         image = pygame.transform.scale(image, (60, 60))
         self.image = image
         self.health = 3
-        self.speed = 1.2
+        self.speed = 2.0
 
     def take_damage(self):
         self.health = self.health - 1
