@@ -20,14 +20,16 @@ class G(Enemy):
             image.convert()
             image = pygame.transform.scale(image, (100, 100))
             self.image = image
-            
-            self.aux = self.aux * self.speed / 1.1
-            self.speed = 1
+
+            self.speed = 4.0
+            self.aux = self.aux / (4.0 / 4.5)
             
         elif self.health == 1:
             image = pygame.image.load("images/bomb_pix.png")
             image.convert()
             image = pygame.transform.scale(image, (80, 80))
             self.image = image
-            self.aux = self.aux * self.speed / 1
-            self.speed = 1
+
+            self.speed = 3.0
+            self.aux = self.aux / (3.0 / 4.0)
+

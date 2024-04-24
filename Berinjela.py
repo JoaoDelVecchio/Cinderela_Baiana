@@ -20,5 +20,5 @@ class Berinjela(Enemy):
         image = pygame.transform.scale(image, (80, 80))
         self.image = image
 
-        self.aux = self.aux * self.speed
-        self.speed = 1
+        self.speed = 3.0
+        self.aux = self.aux / (3.0 / 4)

@@ -130,7 +130,7 @@ class Game:
                     self.map.draw(self.screen)
                     self.handle_events_game()
 
-                    if self.RBE <= 0:
+                    if len(self.enemy_instances) <= 0:
                         i = 0 # time step
                         self.round = self.round + 1
                         self.round_balloons = Rounds.rounds(self.round)
