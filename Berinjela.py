@@ -11,7 +11,7 @@ class Berinjela(Enemy):
         image = pygame.transform.scale(image, (100, 100))
         self.image = image
         self.health = 2
-        self.speed = 1.5
+        self.speed = 2.0
 
     def take_damage(self):
         self.health = self.health - 1
