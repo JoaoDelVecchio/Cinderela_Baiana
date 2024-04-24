@@ -1,7 +1,6 @@
 import pygame
 from Tower import Tower
 
-
 class Submarine(Tower):
 
     def __init__(self):
@@ -12,3 +11,5 @@ class Submarine(Tower):
         self.damage = 3
         self.attack_speed = 1.5
         self.range = 1000
+        
+    
