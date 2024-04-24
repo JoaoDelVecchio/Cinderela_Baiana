@@ -10,17 +10,8 @@ class Button():
         self.clicked = False
         self.surface = surface
 
-    def draw(self):
+    def draw(self, action):
         self.surface.blit(self.image, (self.rect.x, self.rect.y))
-        action = False
-        pos = pygame.mouse.get_pos()
-        for event in pygame.event.get():
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if self.rect.collidepoint(pos):
-                    self.clicked = True
-                    action = True
-            if event.type == pygame.MOUSEBUTTONUP:
-                self.clicked = False
 
         return action
 

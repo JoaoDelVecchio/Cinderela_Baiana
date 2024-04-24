@@ -10,6 +10,7 @@ from TitleScreen import TitleScreen
 from Buttons import Button
 import Rounds
 from math import floor
+from time import sleep
 
 
 class Game:
@@ -25,8 +26,7 @@ class Game:
     round_balloons = []
     X_clicked = False
     which_screen = "title"
-  
-
+    
     # auxiliares
     RBE = 0
     hold_image = 0
@@ -40,6 +40,8 @@ class Game:
         self.map.draw(self.screen)
         start_image = pygame.image.load("images/play_button_official.png").convert_alpha()
         self.start_button = Button(250, 420, start_image, 0.35, self.screen)
+        quit_image = pygame.image.load("images/quit_image.png").convert_alpha()
+        self.quit_button = Button(700, 420, quit_image, 0.9, self.screen)
 
     def health_money_icons(self, screen):
         font = pygame.font.SysFont('Calibri', 40, True)
@@ -158,11 +160,33 @@ class Game:
                     pygame.display.update()
 
             if self.which_screen == "title":
+                
                 while True:
+
+                    
+                    action_start = False
+                    action_quit = False
+                    pos = pygame.mouse.get_pos()
+                    for event in pygame.event.get():
+                        if event.type == pygame.MOUSEBUTTONDOWN:
+                            if self.start_button.rect.collidepoint(pos):
+                                self.clicked = True
+                                action_start = True
+                            if self.quit_button.rect.collidepoint(pos):
+                                self.clicked = True
+                                action_quit = True
+                        if event.type == pygame.MOUSEBUTTONUP:
+                            self.clicked = False
+
+
                     self.title.draw(self.screen)
-                    if self.start_button.draw():
+                    if self.start_button.draw(action_start):
                         self.which_screen = "game"
                         break
+                    if self.quit_button.draw(action_quit):
+                        self.X_clicked = True
+                        break
+                    
                     pygame.display.update()
 
     
