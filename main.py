@@ -5,6 +5,8 @@ from BlueBalloon import BlueBalloon
 from GreenBalloon import GreenBalloon
 from DartMonkey import DartMonkey
 from SuperMonkey import SuperMonkey
+from TitleScreen import TitleScreen
+from Buttons import Button
 import Rounds
 from math import floor
 
@@ -20,7 +22,9 @@ class Game:
     tower_instances = []
     round = 0
     round_balloons = []
-    run = True
+    X_clicked = False
+    which_screen = "title"
+  
 
     # auxiliares
     RBE = 0
@@ -30,8 +34,11 @@ class Game:
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode((self.width, self.height))
+        self.title = TitleScreen()
         self.map = Background()
         self.map.draw(self.screen)
+        start_image = pygame.image.load("images/play_button_official.png").convert_alpha()
+        self.start_button = Button(250, 420, start_image, 0.35, self.screen)
 
     def health_money_icons(self, screen):
         font = pygame.font.SysFont('Calibri', 40, True)
@@ -44,7 +51,7 @@ class Game:
         screen.blit(round_icon, (700, 720))
 
 
-    def handle_events(self):
+    def handle_events_game(self):
 
         if self.hold_image != 0:
             pos = pygame.mouse.get_pos()
@@ -81,61 +88,70 @@ class Game:
                     self.tower_icon = pygame.transform.scale(self.tower_icon, (75, 75))
 
             if event.type == pygame.QUIT:
-                self.run = False
+                self.X_clicked = True
 
     def loop(self):
-        while self.run:
-            self.map.draw(self.screen)
+        while not self.X_clicked:
+            if self.which_screen == "game":
+                while not self.X_clicked:
+                    self.map.draw(self.screen)
 
-            self.handle_events()
-            #print(self.RBE)
+                    self.handle_events_game()
 
-            if self.RBE <= 0:
-                i = 0
-                self.round = self.round + 1
-                self.round_balloons = Rounds.rounds(self.round)
-                self.RBE = self.round_balloons[0] + 2 * self.round_balloons[1] + 3 * self.round_balloons[2]
-                self.money = self.money + 100
+                    if self.RBE <= 0:
+                        i = 0 # time step
+                        self.round = self.round + 1
+                        self.round_balloons = Rounds.rounds(self.round)
+                        self.RBE = self.round_balloons[0] + 2 * self.round_balloons[1] + 3 * self.round_balloons[2]
+                        self.money = self.money + 100
 
-            if i % 50 == 0 and self.round_balloons[0] > 0:
-                self.round_balloons[0] = self.round_balloons[0] - 1
-                instance = RedBalloon()
-                self.enemy_instances.append(instance)
-            if i % floor(1000 / (self.round_balloons[1] + 1)) == 0 and self.round_balloons[1] > 0:
-                self.round_balloons[1] = self.round_balloons[1] - 1
-                instance = BlueBalloon()
-                self.enemy_instances.append(instance)
-            if i % floor(1000 / (self.round_balloons[2] + 1)) == 0 and self.round_balloons[2] > 0:
-                self.round_balloons[2] = self.round_balloons[2] - 1
-                instance = GreenBalloon()
-                self.enemy_instances.append(instance)
+                    if i % 50 == 0 and self.round_balloons[0] > 0:
+                        self.round_balloons[0] = self.round_balloons[0] - 1
+                        instance = RedBalloon()
+                        self.enemy_instances.append(instance)
+                    if i % floor(1000 / (self.round_balloons[1] + 1)) == 0 and self.round_balloons[1] > 0:
+                        self.round_balloons[1] = self.round_balloons[1] - 1
+                        instance = BlueBalloon()
+                        self.enemy_instances.append(instance)
+                    if i % floor(1000 / (self.round_balloons[2] + 1)) == 0 and self.round_balloons[2] > 0:
+                        self.round_balloons[2] = self.round_balloons[2] - 1
+                        instance = GreenBalloon()
+                        self.enemy_instances.append(instance)
 
-            for enemy in self.enemy_instances:
-                for tower in self.tower_instances:
-                    for projectile in tower.projectiles:
-                        if enemy.detect_projectile(projectile.x, projectile.y):
-                            enemy.take_damage()
-                            self.RBE = self.RBE - 1
-                            self.money = self.money + 1
-                            tower.projectiles.remove(projectile)
-                if enemy.end_of_track():
-                    self.enemy_instances.remove(enemy)
-                    self.health = self.health - enemy.health
-                    self.RBE = self.RBE - enemy.health
-                elif enemy.health <= 0:
-                    self.enemy_instances.remove(enemy)
-                enemy.movement(self.screen)
-                
+                    for enemy in self.enemy_instances:
+                        for tower in self.tower_instances:
+                            for projectile in tower.projectiles:
+                                if enemy.detect_projectile(projectile.x, projectile.y):
+                                    enemy.take_damage()
+                                    self.RBE = self.RBE - 1
+                                    self.money = self.money + 1
+                                    tower.projectiles.remove(projectile)
+                        if enemy.end_of_track():
+                            self.enemy_instances.remove(enemy)
+                            self.health = self.health - enemy.health
+                            self.RBE = self.RBE - enemy.health
+                        elif enemy.health <= 0:
+                            self.enemy_instances.remove(enemy)
+                        enemy.movement(self.screen)
+                        
 
-            for tower in self.tower_instances:
-                tower.attack(self.enemy_instances)
-                tower.draw(self.screen)
+                    for tower in self.tower_instances:
+                        tower.attack(self.enemy_instances)
+                        tower.draw(self.screen)
 
-            self.health_money_icons(self.screen)
+                    self.health_money_icons(self.screen)
 
-            i = i + 1
-            pygame.display.update()
+                    i = i + 1
+                    pygame.display.update()
 
+            if self.which_screen == "title":
+                while True:
+                    self.title.draw(self.screen)
+                    if self.start_button.draw():
+                        self.which_screen = "game"
+                        break
+                    pygame.display.update()
 
+    
 game = Game()
 game.loop()
