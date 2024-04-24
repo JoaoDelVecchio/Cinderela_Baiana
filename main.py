@@ -42,6 +42,8 @@ class Game:
         self.start_button = Button(250, 420, start_image, 0.35, self.screen)
         quit_image = pygame.image.load("images/quit_image.png").convert_alpha()
         self.quit_button = Button(700, 420, quit_image, 0.9, self.screen)
+        self.game_music = pygame.mixer.Sound("musics/topgear.mp3")
+        self.title_music = pygame.mixer.Sound("musics/nevergonna.mp3")
 
     def health_money_icons(self, screen):
         font = pygame.font.SysFont('Calibri', 40, True)
@@ -123,9 +125,9 @@ class Game:
     def loop(self):
         while not self.X_clicked and self.health >= 0:
             if self.which_screen == "game":
+                self.game_music.play()
                 while not self.X_clicked:
                     self.map.draw(self.screen)
-
                     self.handle_events_game()
 
                     if self.RBE <= 0:
@@ -174,10 +176,8 @@ class Game:
                     pygame.display.update()
 
             if self.which_screen == "title":
-                
+                self.title_music.play()
                 while True:
-
-                    
                     action_start = False
                     action_quit = False
                     pos = pygame.mouse.get_pos()
@@ -192,13 +192,14 @@ class Game:
                         if event.type == pygame.MOUSEBUTTONUP:
                             self.clicked = False
 
-
                     self.title.draw(self.screen)
                     if self.start_button.draw(action_start):
                         self.which_screen = "game"
+                        self.title_music.stop()
                         break
                     if self.quit_button.draw(action_quit):
                         self.X_clicked = True
+                        self.title_music.stop()
                         break
                     
                     pygame.display.update()
