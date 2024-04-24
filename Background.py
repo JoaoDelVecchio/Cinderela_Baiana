@@ -1,5 +1,5 @@
 import pygame
-
+from math import sqrt
 
 class Background:
     image = None
@@ -10,6 +10,9 @@ class Background:
     money_icon1 = None
     money_icon2 = None
     money_icon3 = None
+    lago_range = 160
+    x_lago, y_lago = [472,345]
+    x_margem_l, x_margem_r, y_margem_s, y_margem_i = [40, 927, 71, 650]
 
     def __init__(self):
         image = pygame.image.load("images/MAPA CINDERELA BAHIANA(1).jpg")
@@ -42,6 +45,20 @@ class Background:
         self.money_icon2 = font.render("Cost: 200", True, (0, 0, 0))
         self.money_icon3 = font.render("Cost: 400", True, (0, 0, 0))
 
+    def raio_do_lago(self, x0, y0):
+        distance = sqrt(((self.x_lago) - x0)**2 + ((self.y_lago) - y0)**2)
+        if( distance <= self.lago_range):
+            return True
+        else:
+            return False
+        
+    def limites_laterais(self, x0, y0):
+        if x0 - self.x_margem_l < 0 or x0 - self.x_margem_r > 0 or y0 - self.y_margem_s < 0 or y0 - self.y_margem_i > 0:
+            return False
+        else:
+            return True
+        
+        
     def draw(self, screen):
         screen.blit(self.image, (0, 0))
         screen.blit(self.margin, (1024, -20))

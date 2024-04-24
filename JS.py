@@ -1,8 +1,7 @@
 import pygame
 from Tower import Tower
 
-
-class SuperMonkey(Tower):
+class JS(Tower):
 
     def __init__(self):
         image = pygame.image.load("images/js-removebg-preview.png")

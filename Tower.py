@@ -1,4 +1,3 @@
-import math
 from math import sqrt
 from Projectile import Projectile
 
@@ -34,10 +33,11 @@ class Tower:
         self.cooldown = self.cooldown + self.attack_speed
         if self.cooldown <= 100:
             pass
+        
         else:
             self.cooldown = 0
             (x, y) = self.enemy_in_range(enemy_instances)
-            if (x, y) == (0, 0):
+            if (x, y) == (0,0):
                 pass
             else:
                 self.projectiles.append(Projectile(x, y, self.pos[0], self.pos[1]))

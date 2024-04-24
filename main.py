@@ -4,7 +4,7 @@ from Bomb import Bomb
 from Berinjela import Berinjela
 from G_Loco import G
 from Calabresa import Calabresa
-from SuperMonkey import SuperMonkey
+from JS import JS
 from Submarine import Submarine
 import Rounds
 from math import floor
@@ -45,7 +45,6 @@ class Game:
         screen.blit(round_icon, (730, 730))
 
     def handle_events(self):
-
         if self.hold_image != 0:
             pos = pygame.mouse.get_pos()
             pos = (pos[0] - 33, pos[1] - 33)
@@ -56,23 +55,36 @@ class Game:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 pos = (pos[0] - 15, pos[1] - 15)
-                
+                print(pos)
                 if self.hold_image == 1 and self.money >= 100:
-                    self.money = self.money - 100
-                    dart_monkey = Calabresa()
-                    dart_monkey.pos = pos
-                    self.tower_instances.append(dart_monkey)
+                    
+                    calabresa = Calabresa()
+                    if self.map.raio_do_lago(pos[0], pos[1]) == True or self.map.limites_laterais(pos[0], pos[1]) == False:
+                        pass
+                    else:
+                        self.money = self.money - 100
+                        calabresa.pos = pos
+                        self.tower_instances.append(calabresa)
+                    
                 if self.hold_image == 2 and self.money >= 200:
-                    self.money = self.money - 200
-                    super_monkey = SuperMonkey()
-                    super_monkey.pos = pos
-                    self.tower_instances.append(super_monkey)
+                    
+                    js = JS()
+                    if self.map.raio_do_lago(pos[0], pos[1]) == True or self.map.limites_laterais(pos[0], pos[1]) == False:
+                        pass
+                    else:
+                        self.money = self.money - 200
+                        js.pos = pos
+                        self.tower_instances.append(js)
                     
                 if self.hold_image == 3 and self.money >= 300:
-                    self.money = self.money - 300
+                    
                     submarine = Submarine()
-                    submarine.pos = pos
-                    self.tower_instances.append(submarine)
+                    if self.map.raio_do_lago(pos[0], pos[1]) == False:
+                        pass
+                    else:
+                        self.money = self.money - 300
+                        submarine.pos = pos
+                        self.tower_instances.append(submarine)
                     
                 self.hold_image = 0
 
@@ -82,6 +94,7 @@ class Game:
                     self.tower_icon = pygame.image.load("images/calabresa-removebg-preview.png")
                     self.tower_icon.convert()
                     self.tower_icon = pygame.transform.scale(self.tower_icon, (75, 75))
+                    
                 if event.key == pygame.K_2:
                     self.hold_image = 2
                     self.tower_icon = pygame.image.load("images/js-removebg-preview.png")
@@ -101,7 +114,7 @@ class Game:
         while self.run and self.health > 0:
             self.map.draw(self.screen)            
             self.handle_events()
-            #print(self.RBE)
+
 
             if self.RBE <= 0:
                 i = 0
