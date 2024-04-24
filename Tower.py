@@ -31,7 +31,7 @@ class Tower:
 
     def attack(self, enemy_instances):
         self.cooldown = self.cooldown + self.attack_speed
-        if self.cooldown <= 100:
+        if self.cooldown <= 300:
             pass
         
         else:
