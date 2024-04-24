@@ -67,7 +67,7 @@ class Game:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 pos = (pos[0] - 15, pos[1] - 15)
-                print(pos)
+                
                 if self.hold_image == 1 and self.money >= 100:
                     
                     calabresa = Calabresa()

@@ -32,10 +32,10 @@ class Enemy:
         
 
     def detect_projectile(self, x, y):
-        if abs(self.x - x) < 21 and abs(self.y - y) < 21:
+        if abs(self.x - x) < 40 and abs(self.y - y) < 40:
             return True
         
-        elif abs(self.x - x) < 21 and abs(self.x - y) < 21:
+        elif abs(self.x - x) < 40 and abs(self.x - y) < 40:
             return True
 
     def pop(self):
