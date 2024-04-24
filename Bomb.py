@@ -2,10 +2,10 @@ import pygame
 from Enemy import Enemy
 
 
-class RedBalloon(Enemy):
+class Bomb(Enemy):
 
     def __init__(self):
-        super(RedBalloon, self).__init__()
+        super(Bomb, self).__init__()
         image = pygame.image.load("images/bomb_pix.png")
         image.convert()
         image = pygame.transform.scale(image, (80, 80))

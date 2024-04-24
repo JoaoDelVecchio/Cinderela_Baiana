@@ -11,6 +11,7 @@ class Tower:
     image = None
     projectiles = []
     cooldown = 101
+    
 
     def __init__(self):
         pass
