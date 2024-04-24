@@ -1,9 +1,9 @@
 import pygame
 from Background import Background
-from RedBalloon import RedBalloon
-from BlueBalloon import BlueBalloon
+from Bomb import Bomb
+from Berinjela import Berinjela
 from G_Loco import G
-from DartMonkey import DartMonkey
+from Calabresa import Calabresa
 from SuperMonkey import SuperMonkey
 from Submarine import Submarine
 import Rounds
@@ -40,10 +40,9 @@ class Game:
         health_icon = font.render("Health:" + str(self.health), True, (0,0,0))
         money_icon = font.render("Money:" + str(self.money), True, (0,0,0))
         round_icon = font.render("Round:" + str(self.round), True, (0,0,0))
-        screen.blit(health_icon, (180, 720))
-        screen.blit(money_icon, (440, 720))
-        screen.blit(round_icon, (700, 720))
-
+        screen.blit(health_icon, (210, 730))
+        screen.blit(money_icon, (470, 730))
+        screen.blit(round_icon, (730, 730))
 
     def handle_events(self):
 
@@ -60,7 +59,7 @@ class Game:
                 
                 if self.hold_image == 1 and self.money >= 100:
                     self.money = self.money - 100
-                    dart_monkey = DartMonkey()
+                    dart_monkey = Calabresa()
                     dart_monkey.pos = pos
                     self.tower_instances.append(dart_monkey)
                 if self.hold_image == 2 and self.money >= 200:
@@ -80,14 +79,14 @@ class Game:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_1:
                     self.hold_image = 1
-                    self.tower_icon = pygame.image.load("images/tower.png")
+                    self.tower_icon = pygame.image.load("images/calabresa-removebg-preview.png")
                     self.tower_icon.convert()
                     self.tower_icon = pygame.transform.scale(self.tower_icon, (75, 75))
                 if event.key == pygame.K_2:
                     self.hold_image = 2
-                    self.tower_icon = pygame.image.load("images/tower2.png")
+                    self.tower_icon = pygame.image.load("images/js-removebg-preview.png")
                     self.tower_icon.convert()
-                    self.tower_icon = pygame.transform.scale(self.tower_icon, (75, 75))
+                    self.tower_icon = pygame.transform.scale(self.tower_icon, (120, 120))
                     
                 if event.key == pygame.K_3:
                     self.hold_image = 3
@@ -100,8 +99,7 @@ class Game:
 
     def loop(self):
         while self.run and self.health > 0:
-            self.map.draw(self.screen)
-
+            self.map.draw(self.screen)            
             self.handle_events()
             #print(self.RBE)
 
@@ -114,11 +112,11 @@ class Game:
 
             if i % 50 == 0 and self.round_balloons[0] > 0:
                 self.round_balloons[0] = self.round_balloons[0] - 1
-                instance = RedBalloon()
+                instance = Bomb()
                 self.enemy_instances.append(instance)
             if i % floor(1000 / (self.round_balloons[1] + 1)) == 0 and self.round_balloons[1] > 0:
                 self.round_balloons[1] = self.round_balloons[1] - 1
-                instance = BlueBalloon()
+                instance = Berinjela()
                 self.enemy_instances.append(instance)
             if i % floor(1000 / (self.round_balloons[2] + 1)) == 0 and self.round_balloons[2] > 0:
                 self.round_balloons[2] = self.round_balloons[2] - 1

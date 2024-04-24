@@ -1,7 +1,7 @@
 
 class Enemy:
     x = 0
-    y = 600
+    y = 650
     aux = 0
     health = None
     image = None
@@ -16,7 +16,7 @@ class Enemy:
         self.track_length = self.aux * self.speed
         if round % 2 == 1:
             
-            if self.track_length <= 610:
+            if self.track_length <= 640:
                 self.y = self.y - self.speed
             else:
                 self.x = self.x + self.speed
@@ -43,5 +43,5 @@ class Enemy:
             return True
 
     def end_of_track(self):
-        if self.track_length >= 1350:
+        if self.track_length >= 1450:
             return True

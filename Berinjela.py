@@ -2,10 +2,10 @@ import pygame
 from Enemy import Enemy
 
 
-class BlueBalloon(Enemy):
+class Berinjela(Enemy):
 
     def __init__(self):
-        super(BlueBalloon, self).__init__()
+        super(Berinjela, self).__init__()
         image = pygame.image.load("images/berinjela.png")
         image.convert()
         image = pygame.transform.scale(image, (100, 100))
