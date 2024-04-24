@@ -2,9 +2,10 @@ import pygame
 from Background import Background
 from RedBalloon import RedBalloon
 from BlueBalloon import BlueBalloon
-from GreenBalloon import GreenBalloon
+from G_Loco import G
 from DartMonkey import DartMonkey
 from SuperMonkey import SuperMonkey
+from Submarine import Submarine
 import Rounds
 from math import floor
 
@@ -14,7 +15,7 @@ class Game:
     height = 768
     screen = None
     map = None
-    money = 100
+    money = 300
     health = 100
     enemy_instances = []
     tower_instances = []
@@ -56,16 +57,24 @@ class Game:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 pos = (pos[0] - 15, pos[1] - 15)
-                if self.hold_image == 1 and self.money >= 200:
-                    self.money = self.money - 200
+                
+                if self.hold_image == 1 and self.money >= 100:
+                    self.money = self.money - 100
                     dart_monkey = DartMonkey()
                     dart_monkey.pos = pos
                     self.tower_instances.append(dart_monkey)
-                if self.hold_image == 2 and self.money >= 400:
-                    self.money = self.money - 400
+                if self.hold_image == 2 and self.money >= 200:
+                    self.money = self.money - 200
                     super_monkey = SuperMonkey()
                     super_monkey.pos = pos
                     self.tower_instances.append(super_monkey)
+                    
+                if self.hold_image == 3 and self.money >= 300:
+                    self.money = self.money - 300
+                    submarine = Submarine()
+                    submarine.pos = pos
+                    self.tower_instances.append(submarine)
+                    
                 self.hold_image = 0
 
             if event.type == pygame.KEYDOWN:
@@ -79,12 +88,18 @@ class Game:
                     self.tower_icon = pygame.image.load("images/tower2.png")
                     self.tower_icon.convert()
                     self.tower_icon = pygame.transform.scale(self.tower_icon, (75, 75))
+                    
+                if event.key == pygame.K_3:
+                    self.hold_image = 3
+                    self.tower_icon = pygame.image.load("images/submarine_front.png")
+                    self.tower_icon.convert()
+                    self.tower_icon = pygame.transform.scale(self.tower_icon, (150, 150))
 
             if event.type == pygame.QUIT:
                 self.run = False
 
     def loop(self):
-        while self.run:
+        while self.run and self.health > 0:
             self.map.draw(self.screen)
 
             self.handle_events()
@@ -107,7 +122,7 @@ class Game:
                 self.enemy_instances.append(instance)
             if i % floor(1000 / (self.round_balloons[2] + 1)) == 0 and self.round_balloons[2] > 0:
                 self.round_balloons[2] = self.round_balloons[2] - 1
-                instance = GreenBalloon()
+                instance = G()
                 self.enemy_instances.append(instance)
 
             for enemy in self.enemy_instances:
@@ -124,7 +139,7 @@ class Game:
                     self.RBE = self.RBE - enemy.health
                 elif enemy.health <= 0:
                     self.enemy_instances.remove(enemy)
-                enemy.movement(self.screen)
+                enemy.movement(self.screen, self.round)
                 
 
             for tower in self.tower_instances:

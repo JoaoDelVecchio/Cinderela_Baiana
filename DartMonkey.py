@@ -11,4 +11,4 @@ class DartMonkey(Tower):
         self.image = image
         self.damage = 1
         self.attack_speed = 1.5
-        self.range = 100
+        self.range = 200
