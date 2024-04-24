@@ -6,6 +6,8 @@ from G_Loco import G
 from Calabresa import Calabresa
 from JS import JS
 from Submarine import Submarine
+from TitleScreen import TitleScreen
+from Buttons import Button
 import Rounds
 from math import floor
 
@@ -21,7 +23,9 @@ class Game:
     tower_instances = []
     round = 0
     round_balloons = []
-    run = True
+    X_clicked = False
+    which_screen = "title"
+  
 
     # auxiliares
     RBE = 0
@@ -31,8 +35,11 @@ class Game:
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode((self.width, self.height))
+        self.title = TitleScreen()
         self.map = Background()
         self.map.draw(self.screen)
+        start_image = pygame.image.load("images/play_button_official.png").convert_alpha()
+        self.start_button = Button(250, 420, start_image, 0.35, self.screen)
 
     def health_money_icons(self, screen):
         font = pygame.font.SysFont('Calibri', 40, True)
@@ -44,7 +51,8 @@ class Game:
         screen.blit(money_icon, (470, 730))
         screen.blit(round_icon, (730, 730))
 
-    def handle_events(self):
+    def handle_events_game(self):
+
         if self.hold_image != 0:
             pos = pygame.mouse.get_pos()
             pos = (pos[0] - 33, pos[1] - 33)
@@ -108,20 +116,22 @@ class Game:
                     self.tower_icon = pygame.transform.scale(self.tower_icon, (150, 150))
 
             if event.type == pygame.QUIT:
-                self.run = False
+                self.X_clicked = True
 
     def loop(self):
-        while self.run and self.health > 0:
-            self.map.draw(self.screen)            
-            self.handle_events()
+        while not self.X_clicked:
+            if self.which_screen == "game":
+                while not self.X_clicked:
+                    self.map.draw(self.screen)
 
+                    self.handle_events_game()
 
-            if self.RBE <= 0:
-                i = 0
-                self.round = self.round + 1
-                self.round_balloons = Rounds.rounds(self.round)
-                self.RBE = self.round_balloons[0] + 2 * self.round_balloons[1] + 3 * self.round_balloons[2]
-                self.money = self.money + 100
+                    if self.RBE <= 0:
+                        i = 0 # time step
+                        self.round = self.round + 1
+                        self.round_balloons = Rounds.rounds(self.round)
+                        self.RBE = self.round_balloons[0] + 2 * self.round_balloons[1] + 3 * self.round_balloons[2]
+                        self.money = self.money + 100
 
             if i % 50 == 0 and self.round_balloons[0] > 0:
                 self.round_balloons[0] = self.round_balloons[0] - 1
@@ -153,15 +163,23 @@ class Game:
                 enemy.movement(self.screen, self.round)
                 
 
-            for tower in self.tower_instances:
-                tower.attack(self.enemy_instances)
-                tower.draw(self.screen)
+                for tower in self.tower_instances:
+                    tower.attack(self.enemy_instances)
+                    tower.draw(self.screen)
 
-            self.health_money_icons(self.screen)
+                    self.health_money_icons(self.screen)
 
-            i = i + 1
-            pygame.display.update()
+                    i = i + 1
+                    pygame.display.update()
 
+            if self.which_screen == "title":
+                while True:
+                    self.title.draw(self.screen)
+                    if self.start_button.draw():
+                        self.which_screen = "game"
+                        break
+                    pygame.display.update()
 
+    
 game = Game()
 game.loop()
