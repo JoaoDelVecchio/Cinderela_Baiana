@@ -10,7 +10,7 @@ class Projectile:
     x_speed = None
     y_speed = None
     image = None
-    velocity_constant = 20
+    velocity_constant = 5
     target = None
 
     def __init__(self, enemy_x, enemy_y, tower_x, tower_y):

@@ -9,7 +9,7 @@ class Tower:
     pos = (0, 0)
     image = None
     projectiles = []
-    cooldown = 101
+    cooldown = 300
     
 
     def __init__(self):

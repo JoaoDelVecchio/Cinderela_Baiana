@@ -8,10 +8,10 @@ class G(Enemy):
         super(G, self).__init__()
         image = pygame.image.load("images/G-removebg-preview.png")
         image.convert()
-        image = pygame.transform.scale(image, (60, 60))
+        image = pygame.transform.scale(image, (80, 80))
         self.image = image
         self.health = 3
-        self.speed = 2.0
+        self.speed = 4.5
 
     def take_damage(self):
         self.health = self.health - 1
@@ -22,7 +22,7 @@ class G(Enemy):
             self.image = image
             
             self.aux = self.aux * self.speed / 1.1
-            self.speed = 1.1
+            self.speed = 1
             
         elif self.health == 1:
             image = pygame.image.load("images/bomb_pix.png")

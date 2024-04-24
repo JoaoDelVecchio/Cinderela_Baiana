@@ -11,7 +11,7 @@ class Bomb(Enemy):
         image = pygame.transform.scale(image, (80, 80))
         self.image = image
         self.health = 1
-        self.speed = 2
+        self.speed = 3.0
 
     def take_damage(self):
         self.health = self.health - 1
